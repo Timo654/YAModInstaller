@@ -54,11 +54,11 @@ if not os.path.exists(MOD_PATH):
     os.system('pause')
     sys.exit()
 
-game_exe_path = filedialog.askopenfilename(title="Select the game executable", filetypes=(
+game_exe_path = filedialog.askopenfilename(title="Select the game's executable", filetypes=(
     ("Executable", "*.exe"), ("All Files", "*.*")))
 game_path = os.path.dirname(game_exe_path)
 if game_exe_path == "" or not os.path.exists(os.path.join(game_path, 'data')):
-    print('Game executable was incorrect or unspecified.')
+    print("The game's executable was either incorrect or unspecified.")
     sys.exit()
 partool_path = filedialog.askopenfilename(
     title="Select the ParTool/ParManager executable", filetypes=(("Executable", "*.exe"), ("All Files", "*.*")))
