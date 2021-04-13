@@ -24,19 +24,10 @@ DeZ7e32h2nMLU8nkVB3/AhJ1lqM/VaYaAAAAAElFTkSuQmCC=="""
 
 
 def get_list_of_files(dir_name):
-    # create a list of file and sub directories
-    # names in the given directory
-    list_of_file = os.listdir(dir_name)
     all_files = list()
-    # Iterate over all the entries
-    for entry in list_of_file:
-        # Create full path
-        full_path = os.path.join(dir_name, entry)
-        # If entry is a directory then get the list of files in this directory
-        if os.path.isdir(full_path):
-            all_files = all_files + get_list_of_files(full_path)
-        else:
-            all_files.append(full_path)
+    for (root, dirs, files) in os.walk(dir_name):
+        for f in files:
+            all_files.append(os.path.join(root, f))
 
     return all_files
 
@@ -69,9 +60,11 @@ if partool_path == "":
 backup_folder = os.path.join(game_path, 'Backup')
 
 # files that aren't in the game normally
-with open(f'{MOD_PATH}/backup_exclude.txt') as f:
-    excluded_from_backup = f.read().splitlines()
-print(excluded_from_backup)
+if os.path.exists(f'{MOD_PATH}/backup_exclude.txt'):
+    with open(f'{MOD_PATH}/backup_exclude.txt') as f:
+        excluded_from_backup = f.read().splitlines()
+else:
+    excluded_from_backup = []
 
 
 # replace files
@@ -102,6 +95,9 @@ while i < len(replacer_files):
                 os.path.join(game_path, file_relative_path))
     i += 1
 
+with open(f'{backup_folder}/backup_exclude.txt', 'a') as f:
+    for row in excluded_from_backup:
+        f.write(f'{row}\n')
 
 # get par files
 add_files_path = os.path.join(MOD_PATH, 'add')
