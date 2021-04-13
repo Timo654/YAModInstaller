@@ -3,6 +3,7 @@ from tkinter import filedialog
 import os
 import sys
 import shutil
+import stat
 
 ICON = """iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADcklEQVQ4jR2TS29bVRSF1zn3aV8/
 4ziO09ipE0cxVXAJlEppghjQph0wRVRUQYAE/RXMmDJhhkBi1HEFAipBKyExADXi0ZaUtEqCGyfx
@@ -25,17 +26,17 @@ GFguIGD9D5+etJD+Hg2ZAAAAAElFTkSuQmCC=="""
 
 def get_list_of_files(dir_name):
     all_files = list()
-    for (root, dirs, files) in os.walk(dir_name):
+    for (root, _, files) in os.walk(dir_name):
         for f in files:
             all_files.append(os.path.join(root, f))
 
     return all_files
 
 
-root = tk.Tk()
+t_root = tk.Tk()
 img = tk.PhotoImage(data=ICON)
-root.tk.call('wm', 'iconphoto', root._w, img)
-root.withdraw()
+t_root.tk.call('wm', 'iconphoto', t_root._w, img)
+t_root.withdraw()
 
 game_exe_path = filedialog.askopenfilename(title="Select the game's executable", filetypes=(
     ("Executable", "*.exe"), ("All Files", "*.*")))
@@ -54,10 +55,13 @@ if os.path.exists(f'{backup_path}/backup_exclude.txt'):
 
     # remove duplicates
     excluded_from_backup = list(dict.fromkeys(excluded_from_backup))
-    
     i = 0
-    while i < len(backed_up_files):
-        os.remove(os.path.join(game_path, excluded_from_backup[i]))
+    while i < len(excluded_from_backup):
+        try:
+            os.remove(os.path.join(game_path, excluded_from_backup[i]))
+        except(FileNotFoundError):
+            print(f'{excluded_from_backup[i]} is already deleted, skipping...')
+
         i += 1
 
 i = 0
@@ -69,5 +73,6 @@ while i < len(backed_up_files):
                 os.path.join(game_path, file_relative_path))
     i += 1
 
+shutil.rmtree(backup_path)
 print('Backup restored.')
 os.system('pause')

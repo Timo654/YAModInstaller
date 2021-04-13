@@ -25,17 +25,17 @@ DeZ7e32h2nMLU8nkVB3/AhJ1lqM/VaYaAAAAAElFTkSuQmCC=="""
 
 def get_list_of_files(dir_name):
     all_files = list()
-    for (root, dirs, files) in os.walk(dir_name):
+    for (root, _, files) in os.walk(dir_name):
         for f in files:
             all_files.append(os.path.join(root, f))
 
     return all_files
 
 
-root = tk.Tk()
+t_root = tk.Tk()
 img = tk.PhotoImage(data=ICON)
-root.tk.call('wm', 'iconphoto', root._w, img)
-root.withdraw()
+t_root.tk.call('wm', 'iconphoto', t_root._w, img)
+t_root.withdraw()
 
 # get paths
 MOD_PATH = "files"
