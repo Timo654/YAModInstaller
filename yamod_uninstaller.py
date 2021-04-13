@@ -3,7 +3,6 @@ from tkinter import filedialog
 import os
 import sys
 import shutil
-import stat
 
 ICON = """iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADcklEQVQ4jR2TS29bVRSF1zn3aV8/
 4ziO09ipE0cxVXAJlEppghjQph0wRVRUQYAE/RXMmDJhhkBi1HEFAipBKyExADXi0ZaUtEqCGyfx
