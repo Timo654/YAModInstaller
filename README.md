@@ -1,3 +1,5 @@
+# Obsolete, just use [RyuModManager](https://github.com/SutandoTsukai181/RyuModManager) instead. 
+
 # YAModInstaller
 Small script for installing mods in Yakuza games
 
